@@ -3,7 +3,7 @@ from bin.todo import Todo
 
 def store_todo(filename, todo):
     if not isinstance(todo, Todo):
-            raise TypeError("%s attribute must be set to an instance of %s" % (todo, Todo))
+        raise TypeError("%s attribute must be set to an instance of %s" % (todo, Todo))
     with open(filename, 'a') as f:
         text = str(todo.id) + ' ' + todo.description + '\n'
         f.write(text)
@@ -27,3 +27,15 @@ def get_todos(filename):
             todo_desc = line
             todos.append(Todo(todo_id, todo_desc))
     return todos
+
+
+def delete_todo(filename, todo_id):
+    f = open(filename)
+    output = []
+    for line in f:
+        if todo_id != line.split(' ', 1)[0]:
+            output.append(line)
+    f.close()
+    f = open(filename, 'w')
+    f.writelines(output)
+    f.close()
