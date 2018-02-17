@@ -1,6 +1,6 @@
 class Todo(object):
     # The class "constructor" - It's actually an initializer
-    def __init__(self, id_num, sender, description, recipient=None, done=False):
+    def __init__(self, id_num, description, sender=None, recipient=None):
         self._id_num = id_num
         self._sender = sender
         self._recipient = recipient
@@ -22,10 +22,3 @@ class Todo(object):
     @property
     def description(self):
         return self._description
-
-    @property
-    def done(self):
-        return self._done
-
-    def is_done(self):
-        self._done = True
