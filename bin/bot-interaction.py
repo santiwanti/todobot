@@ -7,7 +7,13 @@ from aiogram.utils import executor
 from bin.todo import Todo
 from bin.storage import Storage
 
-bot = Bot(token='461685553:AAH6nNu05ygR3-kKY4tFZKHAlGga54sYh-s')
+
+def get_token():
+    with open('../config/token.txt', 'r') as token:
+        return token.readlines()[0]
+
+
+bot = Bot(token=get_token())
 dp = Dispatcher(bot)
 
 
