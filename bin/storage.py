@@ -1,12 +1,6 @@
 from bin.todo import Todo
 
-
-def store_todo(filename, todo):
-    if not isinstance(todo, Todo):
-        raise TypeError("%s attribute must be set to an instance of %s" % (todo, Todo))
-    with open(filename, 'a') as f:
-        text = str(todo.id) + ' ' + todo.description + '\n'
-        f.write(text)
+_filepath = "../lists/"
 
 
 def _separate_first_word(line):
@@ -19,23 +13,34 @@ def _get_id(line):
     return separated_line, int(todo_id)
 
 
-def get_todos(filename):
-    todos = []
-    with open(filename, 'r') as f:
+class Storage(object):
+        
+    def __init__(self, filename):
+        self._filename = _filepath + filename
+
+    def store_todo(self, todo):
+        if not isinstance(todo, Todo):
+            raise TypeError("%s attribute must be set to an instance of %s" % (todo, Todo))
+        with open(self._filename, 'a') as f:
+            text = str(todo.id) + ' ' + todo.description + '\n'
+            f.write(text)
+    
+    def get_todos(self):
+        todos = []
+        with open(self._filename, 'r') as f:
+            for line in f:
+                line, todo_id = _get_id(line)
+                todo_desc = line
+                todos.append(Todo(todo_id, todo_desc))
+        return todos
+    
+    def delete_todo(self, todo_id):
+        f = open(self._filename)
+        output = []
         for line in f:
-            line, todo_id = _get_id(line)
-            todo_desc = line
-            todos.append(Todo(todo_id, todo_desc))
-    return todos
-
-
-def delete_todo(filename, todo_id):
-    f = open(filename)
-    output = []
-    for line in f:
-        if todo_id != line.split(' ', 1)[0]:
-            output.append(line)
-    f.close()
-    f = open(filename, 'w')
-    f.writelines(output)
-    f.close()
+            if todo_id != line.split(' ', 1)[0]:
+                output.append(line)
+        f.close()
+        f = open(self._filename, 'w')
+        f.writelines(output)
+        f.close()

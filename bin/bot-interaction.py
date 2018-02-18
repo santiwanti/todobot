@@ -5,7 +5,7 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 
 from bin.todo import Todo
-from bin.storage import store_todo, get_todos, delete_todo
+from bin.storage import Storage
 
 bot = Bot(token='461685553:AAH6nNu05ygR3-kKY4tFZKHAlGga54sYh-s')
 dp = Dispatcher(bot)
@@ -34,14 +34,14 @@ async def show_help(message: types.Message):
 async def save_todo(message: types.Message):
     filename = get_filename(message)
     todo = Todo(get_todo_id(), message.get_args())
-    store_todo(filename, todo)
+    Storage(filename).store_todo(todo)
 
 
 @dp.message_handler(commands=['tododone', 'Tododone'])
 async def todo_done(message: types.Message):
     filename = get_filename(message)
     todo_id = message.get_args()
-    delete_todo(filename, todo_id)
+    Storage(filename).delete_todo(todo_id)
     pass
 
 
@@ -49,7 +49,7 @@ async def todo_done(message: types.Message):
 async def show_todo(message: types.Message):
     txt = 'TODOs:\n'
     filename = get_filename(message)
-    todos = get_todos(filename)
+    todos = Storage(filename).get_todos()
     for todo in todos:
         txt += str(todo.id) + '. ' + todo.description
     await message.reply(txt)
