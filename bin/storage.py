@@ -20,7 +20,7 @@ def _get_id(line):
 
 
 def _contains_id(filename, expected_id):
-    with open(filename, 'a') as f:
+    with open(filename, 'r') as f:
         for line in f:
             line, todo_id = _get_id(line)
             if todo_id == expected_id:
