@@ -206,7 +206,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # Specific ignores
-*.td
+lists/
 token.txt
 
 
