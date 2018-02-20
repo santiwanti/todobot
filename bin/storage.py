@@ -37,10 +37,16 @@ def _remove_id(filename, todo_id):
     return output
 
 
+def check_exists(filename):
+    open(filename, 'a').close()
+
+
 class Storage(object):
         
     def __init__(self, filename):
-        self._filename = _filepath + filename
+        complete_name = _filepath + filename
+        check_exists(complete_name)
+        self._filename = complete_name
 
     def store_todo(self, todo):
         if not isinstance(todo, Todo):
