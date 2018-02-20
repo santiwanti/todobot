@@ -8,6 +8,8 @@ from bin.todo import Todo
 from bin.storage import Storage
 
 
+# TODO handle Storage Exceptions
+
 def get_token():
     with open('../config/token.txt', 'r') as token:
         return token.readlines()[0]
@@ -22,7 +24,7 @@ def get_todo_id():
 
 
 def get_filename(message: types.Message):
-    return str(message.chat.id) + '_' + str(message.from_user.id) + '.td'
+    return str(message.chat.id) + '.td'
 
 
 @dp.message_handler(commands=['start'])
