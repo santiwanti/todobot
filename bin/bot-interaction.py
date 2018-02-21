@@ -50,7 +50,6 @@ async def todo_done(message: types.Message):
     filename = get_filename(message)
     todo_id = message.get_args()
     Storage(filename).delete_todo(todo_id)
-    pass
 
 
 @dp.message_handler(commands=['todolist', 'Todolist'])
