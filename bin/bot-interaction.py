@@ -67,9 +67,9 @@ async def show_todo(message: types.Message):
 
 
 @dp.message_handler(command=['list', 'List'])
-async def show_todo(message: types.Message):
+async def show_todo_list(message: types.Message):
     txt = "Lists:\n"
-    txt += Storage.existing_lists(str(message.chat))
+    txt += Storage.existing_lists(str(message.chat.id))
     await message.reply(txt)
 
 

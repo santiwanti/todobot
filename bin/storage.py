@@ -1,3 +1,6 @@
+from os import listdir
+from os.path import isfile, join
+
 from bin.todo import Todo
 
 _filepath = "../lists/"
@@ -41,7 +44,28 @@ def check_exists(filename):
     open(filename, 'a').close()
 
 
+def belongs_to_chat(filename, chat):
+    return str(filename).split('_')[0] == chat
+
+
+def get_type(filename):
+    return filename.split('_')[1][:-3].upper()
+
+
+def get_files(file_path):
+    return [f for f in listdir(file_path) if isfile(join(file_path, f))]
+
+
 class Storage(object):
+
+    @staticmethod
+    def existing_lists(chat: str):
+        txt = ''
+        files = get_files(_filepath)
+        for file in files:
+            if belongs_to_chat(file, chat):
+                txt += get_type(file) + '\n'
+        return txt
         
     def __init__(self, filename):
         complete_name = _filepath + filename
